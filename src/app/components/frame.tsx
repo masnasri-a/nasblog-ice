@@ -41,7 +41,7 @@ const Frame = () => {
         <div className="writer-date">
           {/* <span>4 May 2023</span> */}
           <span>{publishAt}</span>
-          {/* <p>Inse Sella Mela</p> */}
+          <p>  .</p>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@ const Frame = () => {
 
 async function gatData() {
   const data = await axios.get(
-    "http://192.168.18.32:1337/api/contents?pagination%5BwithCount%5D=true&pagination%5Bpage%5D=1&pagination%5BpageSize%5D=1&populate=%2A"
+    `http://203.194.113.203:1337/api/contents?pagination%5BwithCount%5D=true&pagination%5Bpage%5D=1&pagination%5BpageSize%5D=1&populate=%2A`
   );
 
   // if (data.data.data){

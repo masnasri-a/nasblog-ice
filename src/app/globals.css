@@ -266,6 +266,26 @@
   justify-content: center;
   align-items: center;
 }
-.footer span{
+.footer span {
   color: white;
+}
+
+.title-post {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 60px;
+}
+
+.desc-post {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: 38px;
+}
+
+.image-post{
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

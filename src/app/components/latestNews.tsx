@@ -30,7 +30,7 @@ const LatestNews = () => {
 
 async function getData() {
   const data = await axios.get(
-    "http://192.168.18.32:1337/api/contents?pagination%5BpageSize%5D=4&populate=%2A"
+    `http://203.194.113.203:1337/api/contents?pagination%5BpageSize%5D=4&populate=%2A`
   );
   const entries = data.data.data;
 
