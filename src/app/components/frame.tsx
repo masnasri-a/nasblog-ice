@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Shani from "../../assets/Shani.png";
 import axios from "axios";
 import dayjs from 'dayjs';
+import { useRouter } from "next/navigation";
 
 const Frame = () => {
   // console.log(data);
@@ -11,6 +12,7 @@ const Frame = () => {
   const [description, setDescription] = useState("")
   const [publishAt, setPublishAt] = useState("")
   const [picture, setPicture] = useState("")
+  const [links, setLinks] = useState("")
   useEffect(() => {
     const fetch = async()=>{
       const data = await gatData();
@@ -20,13 +22,14 @@ const Frame = () => {
       const formattedDate = dayjs(dateString).locale('en').format('DD MMMM YYYY');
       setPublishAt(formattedDate); // Output: "14 May 2023"
       setPicture(data.data.picture)
+      setLinks(data.data.links)
     }
     fetch()
   }, []);
-
+  const router = useRouter()
   return (
-    <div className="frame">
-      <div className="image-content">
+    <div className="frame" onClick={()=> router.push(links)}>
+      <div className="image-content" >
         <Image src={picture} className="images" width={600} height={400} alt="images" />
       </div>
       <div className="content-frame">
@@ -57,18 +60,20 @@ async function gatData() {
   const content = data.data.data[0];
   // }
   const attributes = content.attributes
+  const links = `${attributes.categories.data[0].attributes.CategoryName}/${attributes.slug}`
   const title = attributes.Title;
   const desctription = attributes.Description
   const publishedAt = attributes.publishedAt
   const picture = attributes.Media.data[0].attributes.url
-  console.log(picture);
+  console.log(links);
 
   return {
     data: {
       title: title,
       desctription:desctription,
       publishedAt:publishedAt,
-      picture:picture
+      picture:picture,
+      links:links
     },
   };
 }

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import CardLatest from "./cardLatest";
 import axios from "axios";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
 const LatestNews = () => {
+  const router = useRouter()
   const [detail, setDetail] = useState<any[]>([]);
   useEffect(() => {
     const fetch = async () => {
@@ -18,7 +20,7 @@ const LatestNews = () => {
       <div className="latest-content">
         {detail.map((content: any, index: number) => {
           return (
-            <div key={index} className="card-latest">
+            <div key={index} className="card-latest" onClick={()=> router.push(content.links)}>
               <CardLatest key={index} title={content.title} picture={content.picture} createdAt={content.createdAt} />
             </div>
           );
@@ -35,10 +37,13 @@ async function getData() {
   const entries = data.data.data;
 
   const titlesAndDates = entries.map((entry: any) => ({
+    links:`${entry.attributes.categories.data[0].attributes.CategoryName}/${entry.attributes.slug}`,
     title: entry.attributes.Title,
     createdAt: dayjs(entry!.attributes.createdAt).locale('en').format('DD MMMM YYYY'),
     picture: entry.attributes.Media.data[0].attributes.url,
   }));
+  console.log(titlesAndDates);
+  
   return titlesAndDates;
 }
 

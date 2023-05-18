@@ -4,8 +4,10 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import Headers from "../components/headers";
 import CardListNews from "../components/cardListNews";
+import { useRouter } from "next/navigation";
 
 const Page = (props: any) => {
+  const router = useRouter()
   const [detail, setDetail] = useState<any[]>([]);
   useEffect(() => {
     const fetch = async () => {
@@ -23,7 +25,7 @@ const Page = (props: any) => {
           <div className="main-content-list-news">
             {detail.map((content: any, index: number) => {
               return (
-                <div key={index}>
+                <div key={index} onClick={() => router.push(content.links)}>
                   <CardListNews
                     key={index}
                     title={content.title}
@@ -48,12 +50,15 @@ async function getData(category: string) {
   const entries = data.data.data;
 
   const titlesAndDates = entries.map((entry: any) => ({
+    links:`${entry.attributes.categories.data[0].attributes.CategoryName}/${entry.attributes.slug}`,
     title: entry.attributes.Title,
     createdAt: dayjs(entry!.attributes.createdAt)
       .locale("en")
       .format("DD MMMM YYYY"),
     picture: entry.attributes.Media.data[0].attributes.url,
   }));
+  console.log(titlesAndDates);
+  
   return titlesAndDates;
 }
 export default Page;
